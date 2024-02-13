@@ -1,0 +1,81 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap");
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.app {
+  min-height: 100vh;
+  background-image: linear-gradient(
+    to right bottom,
+    #e4a7db,
+    #d245db,
+    #a22dce,
+    #7d3ac5,
+    #a22dce
+  );
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.calculator-container {
+  background: #a22dce;
+  height: 500px;
+  min-width: 370px;
+  max-width: 370px;
+}
+
+.result-container {
+  height: 100px;
+  width: 100%;
+  color: #e4a7db;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-size: 40px;
+  border-bottom: 4px solid black;
+}
+
+.buttons-container {
+  width: 100%;
+  height: 396px;
+  gap: 5px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+button {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  border: none;
+  background-color: #e4a7db;
+  cursor: pointer;
+  font-size: 30px;
+  color: #a22dce;
+}
+
+.number-container:first-child {
+  display: grid;
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+
+.number-container:first-child {
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+
+.number-container:nth-child(15) {
+  display: grid;
+  grid-row: 4 / 6;
+  grid-column: 4 / 4;
+}
+
+.number-container:nth-child(16) {
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
