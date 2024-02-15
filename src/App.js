@@ -7,65 +7,58 @@ import { numbers, operators } from "./Data";
 function App() {
   const [currentNumber, setCurrentNumber] = React.useState("");
   const [previousNumber, setPreviousNumber] = React.useState("");
-  const [getResult, setGetResult] = React.useState("");
 
   console.log(currentNumber);
   console.log(previousNumber);
-  console.log(getResult);
 
   const handleSubmit = () => {
     const summaryResult = eval(currentNumber);
-    setGetResult(`${summaryResult}`);
-    setCurrentNumber("");
     setPreviousNumber(`${summaryResult}`);
+    setCurrentNumber("");
   };
 
   const resetCalculator = () => {
-    setGetResult("");
     setCurrentNumber("");
     setPreviousNumber("");
   };
 
   const handleNumbers = (value) => {
-    if (currentNumber === "0") {
-    } else if (previousNumber) {
-      setCurrentNumber(`${previousNumber}${currentNumber}`);
-    }
+    setCurrentNumber(`${value}${currentNumber}`);
+
+    setCurrentNumber(`${previousNumber}${currentNumber}`);
     setCurrentNumber((prevNumber) => prevNumber + value);
-    setGetResult(`${value}`);
+  };
+
+  const handleDot = (value) => {
+    if (currentNumber === "") {
+      setCurrentNumber(`0${value}`);
+    } else if (!currentNumber.includes(".")) {
+      setCurrentNumber(`${currentNumber}${value}`);
+    }
   };
 
   const handleOperators = (value) => {
-    const operator = operators.find((match) => match === value);
-    const firstCharOperator = currentNumber.charAt(0);
-    const lastCharOperator = currentNumber.charAt(currentNumber.length - 1);
+    let firstChar = currentNumber.charAt(0);
+    let lastChar = currentNumber.charAt(currentNumber.length - 1);
 
-    if (
-      operators.includes(lastCharOperator) ||
-      operators.includes(firstCharOperator)
-    ) {
+    if (firstChar === operators && currentNumber === "-") {
+      return (firstChar = "");
+    }
+
+    if (operators.includes(firstChar)) {
       setCurrentNumber(currentNumber.slice(0, -1) + value);
-      setGetResult(currentNumber.slice(0, -1) + value);
+      return;
+    } else if (operators.includes(lastChar)) {
       return;
     }
 
     setCurrentNumber(`${currentNumber + value}`);
-    setGetResult(`${currentNumber + value}`);
-
-    return `${value + operator}`;
   };
-
-  const handleOutput = () => {
-    setPreviousNumber(getResult);
-  };
-
-  React.useState(() => {
-    handleOutput();
-  }, [currentNumber]);
 
   const handleInput = (value) => {
     const number = numbers.find((match) => match === value);
     const operator = operators.find((match) => match === value);
+    const dot = ".";
     switch (value) {
       case "AC":
         resetCalculator();
@@ -78,6 +71,9 @@ function App() {
         break;
       case operator:
         handleOperators(value);
+        break;
+      case dot:
+        handleDot(value);
         break;
       default:
         break;
