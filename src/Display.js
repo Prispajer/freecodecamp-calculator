@@ -1,13 +1,13 @@
 import React from "react";
 
-export default function Display({ value, result }) {
+export default function Display({ currentNumber, showResult }) {
   return (
     <div className="result-container">
       <div className="active-numbers">
-        <span>{value}</span>
+        <span>{currentNumber}</span>
       </div>
       <div className="result">
-        <span>{result}</span>
+        <span>{showResult}</span>
       </div>
     </div>
   );

@@ -7,7 +7,7 @@ export default function Buttons({ handleInput }) {
     <div className="buttons-container">
       {calcData.map((button) => {
         return (
-          <div className="number-container">
+          <div key={button.id} className="number-container">
             <Button
               key={button.id}
               button={button}

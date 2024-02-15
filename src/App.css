@@ -36,7 +36,6 @@ body {
   flex-direction: column;
   align-items: flex-end;
   font-size: 40px;
-  border-bottom: 4px solid black;
 }
 
 .buttons-container {
