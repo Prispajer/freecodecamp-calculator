@@ -14,17 +14,6 @@ function App() {
   const handleSubmit = () => {
     const summaryResult = eval(currentNumber);
     setPreviousNumber(`${summaryResult}`);
-    if (currentNumber && previousNumber) {
-      setCurrentNumber(`${summaryResult}`);
-    }
-
-    if (
-      operators.includes(lastChar) ||
-      operators.some((operator) => currentNumber.includes(operator)) ||
-      !lastChar
-    ) {
-      setCurrentNumber(currentNumber);
-    }
   };
 
   const resetCalculator = () => {
@@ -35,10 +24,6 @@ function App() {
   const handleNumbers = (value) => {
     setCurrentNumber((prevNumber) => prevNumber + value);
   };
-
-  React.useEffect(() => {
-    setCurrentNumber(`${previousNumber}`);
-  }, [previousNumber]);
 
   const handleDot = (value) => {
     const intoParts = currentNumber.split(/[-+*/]/);
@@ -54,18 +39,18 @@ function App() {
   const handleOperators = (value) => {
     if (operators.includes(lastChar)) {
       return;
-    } else if (lastChar.includes("-")) {
-      return lastChar === "-";
-    }
-
-    if (firstChar === "-" || lastChar === "-") {
-      setCurrentNumber(`${currentNumber + "-"}`);
+    } else if (value === "-") {
+      return setCurrentNumber(`${currentNumber}-`);
+    } else if (value.includes(firstChar)) {
+      return setCurrentNumber("");
     } else {
-      setCurrentNumber(`${currentNumber}`);
+      setCurrentNumber(`${currentNumber}${value}`);
     }
-
-    setCurrentNumber(`${currentNumber}${value}`);
   };
+
+  React.useEffect(() => {
+    setCurrentNumber(`${previousNumber}`);
+  }, [previousNumber]);
 
   const handleInput = (value) => {
     const number = numbers.find((match) => match === value);
@@ -76,7 +61,9 @@ function App() {
         resetCalculator();
         break;
       case "=":
-        handleSubmit();
+        if (value) {
+          handleSubmit(value);
+        }
         break;
       case number:
         handleNumbers(value);
