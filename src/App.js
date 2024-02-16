@@ -61,7 +61,7 @@ function App() {
         resetCalculator();
         break;
       case "=":
-        if (value) {
+        if (currentNumber) {
           handleSubmit(value);
         }
         break;
