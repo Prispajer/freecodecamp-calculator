@@ -8,13 +8,23 @@ function App() {
   const [currentNumber, setCurrentNumber] = React.useState("");
   const [previousNumber, setPreviousNumber] = React.useState("");
 
-  console.log(currentNumber);
-  console.log(previousNumber);
+  let firstChar = currentNumber.charAt(0);
+  let lastChar = currentNumber.charAt(currentNumber.length - 1);
 
   const handleSubmit = () => {
     const summaryResult = eval(currentNumber);
     setPreviousNumber(`${summaryResult}`);
-    setCurrentNumber("");
+    if (currentNumber && previousNumber) {
+      setCurrentNumber(`${summaryResult}`);
+    }
+
+    if (
+      operators.includes(lastChar) ||
+      operators.some((operator) => currentNumber.includes(operator)) ||
+      !lastChar
+    ) {
+      setCurrentNumber(currentNumber);
+    }
   };
 
   const resetCalculator = () => {
@@ -23,36 +33,38 @@ function App() {
   };
 
   const handleNumbers = (value) => {
-    setCurrentNumber(`${value}${currentNumber}`);
-
-    setCurrentNumber(`${previousNumber}${currentNumber}`);
     setCurrentNumber((prevNumber) => prevNumber + value);
   };
 
+  React.useEffect(() => {
+    setCurrentNumber(`${previousNumber}`);
+  }, [previousNumber]);
+
   const handleDot = (value) => {
+    const intoParts = currentNumber.split(/[-+*/]/);
+    const intoPartsLast = intoParts[intoParts.length - 1];
+
     if (currentNumber === "") {
       setCurrentNumber(`0${value}`);
-    } else if (!currentNumber.includes(".")) {
+    } else if (!intoPartsLast.includes(".")) {
       setCurrentNumber(`${currentNumber}${value}`);
     }
   };
 
   const handleOperators = (value) => {
-    let firstChar = currentNumber.charAt(0);
-    let lastChar = currentNumber.charAt(currentNumber.length - 1);
-
-    if (firstChar === operators && currentNumber === "-") {
-      return (firstChar = "");
+    if (operators.includes(lastChar)) {
+      return;
+    } else if (lastChar.includes("-")) {
+      return lastChar === "-";
     }
 
-    if (operators.includes(firstChar)) {
-      setCurrentNumber(currentNumber.slice(0, -1) + value);
-      return;
-    } else if (operators.includes(lastChar)) {
-      return;
+    if (firstChar === "-" || lastChar === "-") {
+      setCurrentNumber(`${currentNumber + "-"}`);
+    } else {
+      setCurrentNumber(`${currentNumber}`);
     }
 
-    setCurrentNumber(`${currentNumber + value}`);
+    setCurrentNumber(`${currentNumber}${value}`);
   };
 
   const handleInput = (value) => {

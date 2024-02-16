@@ -1,7 +1,7 @@
 export const calcData = [
   { id: "clear", value: "AC" },
   { id: "divide", value: "/" },
-  { id: "multiply", value: "x" },
+  { id: "multiply", value: "*" },
   { id: "seven", value: 7 },
   { id: "eight", value: 8 },
   { id: "nine", value: 9 },
@@ -18,6 +18,6 @@ export const calcData = [
   { id: "decimal", value: "." },
 ];
 
-export const operators = ["AC", "/", "x", "+", "-", "="];
+export const operators = ["AC", "/", "*", "+", "-", "="];
 
 export const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
